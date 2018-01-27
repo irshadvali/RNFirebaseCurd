@@ -7,12 +7,15 @@ import {
     View,
     TouchableHighlight,
     TextInput,
-    ListView
+    ListView,
+    ActivityIndicator,
+    FlatList
 } from 'react-native';
 import * as firebase from "firebase";
+import ListItem from "./ListItem"
 // create a component
 //var Firebase = require('firebase');
-
+let ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 })
 //var myFirebaseRef;
 const firebaseConfig = {
     apiKey: "AIzaSyDAyjiQoy7ogBnqI_Ae3gD5FJn7q3sjNas",
@@ -26,13 +29,12 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 class ShowList extends Component {
     constructor(props) {
         super(props);
-        itemDataSource:[];
-        let ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 })
-        this.setState({
-            itemDataSource: ds
-        })
         this.itemsRef = this.getRef().child('mainList');
+        this.state = {
+            itemDataSource: []
+        }
     }
+
 
     getRef() {
         return firebaseApp.database().ref();
@@ -48,21 +50,24 @@ class ShowList extends Component {
     }
     getItems(itemsRef) {
 
-        itemsRef.on('value',(snap)=>{
+        itemsRef.on('value', (snap) => {
             let items = [];
-          snap.forEach((child) =>{
+            snap.forEach((child) => {
                 items.push({
-                    title:child.val().title
+                    title: child.val().title,
+                    details:child.val().details,
+                    dateString:child.val().dateString
                 });
             });
-            console.log(items)
+
             this.setState({
-                itemDataSource:this.state.itemDataSource.cloneWithRows(items)
+                itemDataSource: items
             })
-            console.log("itemDataSource")
-            console.log(itemDataSource)
+
+
+
         });
-        
+
     }
 
 
@@ -84,27 +89,42 @@ class ShowList extends Component {
 
 
     render() {
-        return (
-            <View style={styles.appContainer}>
-                <View style={styles.titleView}>
-                    <Text style={styles.titleText}>
-                        My Todos
-        </Text>
+        console.log(this);
+        if (this.state.itemDataSource) {
+            return (
+                <View style={styles.appContainer}>
+                <View style={{height:50,backgroundColor:"blue"}}></View>
+                    <View style={{
+                        flex: 1,
+                        flexDirection: 'column',
+                    }}>
+                        <View style={styles.listContainer}>
+                            <FlatList
+                                data={this.state.itemDataSource}
+                                ItemSeparatorComponent={this.FlatListItemSeparator}
+                                renderItem={({ item }) => 
+                                <ListItem
+                                dataResult={item}
+                                />
+                                 
+                                }
+                            />
+
+                            {/* <ListView
+                        dataSource={ds.cloneWithRows(this.state.itemDataSource)}
+                        renderRow={this.renderRow.bind(this)} /> */}
+                        </View>
+                        <View style={styles.footer}>
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.inputcontainer}>
-                    <TextInput style={styles.input} />
-                    <TouchableHighlight
-                        style={styles.button}
-                        onPress={() => this.addTodo()}
-                        underlayColor='#dddddd'>
-                        <Text style={styles.btnText}>Add!</Text>
-                    </TouchableHighlight>
-                </View>
-                {/* <ListView
-                    dataSource={this.state.itemDataSource}
-                    renderRow={this.renderRow.bind(this)} /> */}
-            </View>
-        );
+            );
+        }
+        else {
+            return (<ActivityIndicator />)
+        }
+
+
     }
 }
 
@@ -113,15 +133,34 @@ class ShowList extends Component {
 // define your styles
 const styles = StyleSheet.create({
     appContainer: {
-        flex: 1
+        flex: 1,
+        width: "100%",
+        backgroundColor: "#ffffff",
+        paddingTop: 20
+    },
+    footer: {
+        flex: .10,
+        width: "100%",
+
+        backgroundColor: "#333"
+    },
+    listContainer: {
+        flex: .90,
+        width: "100%",
+        backgroundColor: "#e6e6e6"
     },
     titleView: {
         backgroundColor: '#48afdb',
-        paddingTop: 30,
+        height: 50,
+        marginTop: 30,
         paddingBottom: 10,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: "center",
+        backgroundColor: "#d00000"
+
     },
     titleText: {
+        width: "100%",
         color: '#fff',
         textAlign: 'center',
         fontWeight: 'bold',
@@ -129,7 +168,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     inputcontainer: {
-        marginTop: 5,
+        marginTop: 25,
         padding: 10,
         flexDirection: 'row'
     },
@@ -159,6 +198,7 @@ const styles = StyleSheet.create({
         color: '#48BBEC'
     },
     row: {
+        width: "100%",
         flexDirection: 'row',
         padding: 12,
         height: 44
@@ -169,6 +209,7 @@ const styles = StyleSheet.create({
     },
     todoText: {
         flex: 1,
+        color: "#333"
     }
 });
 
