@@ -69,33 +69,33 @@ class ListItem extends Component {
     // this.itemsRef.child(this.props.dataResult.id).remove();
     this.setState({ likechecked: val });
     if (val == true) {
-      // alert(val)
-      this.itemsRef.child(this.props.dataResult.id).update({ like: 1 })
-      // this.setState({
-      //     like: 1
-      // })
+      this.itemsRef.child(this.props.dataResult.id).update({like:0})
+      this.setState({
+        likechecked:false
+      })
     }
     else {
-      this.itemsRef.child(this.props.dataResult.id).update({ "like": 0 })
-      // this.setState({
-      //     // like: 0
-      // })
+      this.itemsRef.child(this.props.dataResult.id).update({like:1}) 
+      this.setState({
+        likechecked:true
+      })  
     }
   }
 
   handleOnChangeFav(val) {
     this.setState({ favchecked: val });
     // alert(val)
-
     if (val == true) {
+      this.itemsRef.child(this.props.dataResult.id).update({favourite:0})
       this.setState({
-        favourite: 1
+        favchecked:false
       })
     }
     else {
+      this.itemsRef.child(this.props.dataResult.id).update({favourite:1}) 
       this.setState({
-        favourite: 0
-      })
+        favchecked:true
+      })  
     }
   }
 

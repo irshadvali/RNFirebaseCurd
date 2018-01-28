@@ -58,6 +58,7 @@ class AddNewItem extends Component {
                 favourite: this.state.favourite,
                 poem: this.state.poem,
                 story: this.state.story,
+                createdFlag:0
             });
             var { navigate } = this.props.navigation;
             navigate("ShowList", {});
