@@ -11,7 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
-import ShowList from "./src/ShowList"
+import LoadingScreen from "./src/LoadingScreen"
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -23,9 +23,9 @@ const instructions = Platform.select({
 export default class App extends Component<{}> {
   render() {
     return (
-      <View style={styles.container}>
-      < ShowList />
-      </View>
+     
+      < LoadingScreen />
+    
     );
   }
 }

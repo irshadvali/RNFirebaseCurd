@@ -56,7 +56,12 @@ class ShowList extends Component {
                 items.push({
                     title: child.val().title,
                     details:child.val().details,
-                    dateString:child.val().dateString
+                    dateString:child.val().dateString,
+                    like:child.val().like,
+                    favourite:child.val().favourite,
+                    poem:child.val().poem,
+                    story:child.val().story,
+                    createdFlag:child.val().createdFlag
                 });
             });
 
@@ -70,7 +75,10 @@ class ShowList extends Component {
 
     }
 
-
+    AddNewItem = () => {
+        var { navigate } = this.props.navigation;
+        navigate("AddNewItem", {});
+      };
 
     renderRow(rowData) {
         return (
@@ -89,11 +97,10 @@ class ShowList extends Component {
 
 
     render() {
-        console.log(this);
         if (this.state.itemDataSource) {
             return (
                 <View style={styles.appContainer}>
-                <View style={{height:50,backgroundColor:"blue"}}></View>
+                <View style={{height:50,backgroundColor:"#e6e6e6"}}></View>
                     <View style={{
                         flex: 1,
                         flexDirection: 'column',
@@ -114,8 +121,12 @@ class ShowList extends Component {
                         dataSource={ds.cloneWithRows(this.state.itemDataSource)}
                         renderRow={this.renderRow.bind(this)} /> */}
                         </View>
-                        <View style={styles.footer}>
-                        </View>
+                        <TouchableHighlight style={[styles.footer,{justifyContent:'center'}]}
+                        
+                        onPress={this.AddNewItem}>
+                       <Text style={{textAlign:'center'}}> CLICK TO ADD NEW ITEM</Text>
+                        </TouchableHighlight>
+                      
                     </View>
                 </View>
             );
@@ -136,13 +147,11 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         backgroundColor: "#ffffff",
-        paddingTop: 20
     },
     footer: {
         flex: .10,
         width: "100%",
-
-        backgroundColor: "#333"
+        backgroundColor: "#777777"
     },
     listContainer: {
         flex: .90,
