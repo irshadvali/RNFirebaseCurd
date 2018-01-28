@@ -61,7 +61,8 @@ class ShowList extends Component {
                     favourite:child.val().favourite,
                     poem:child.val().poem,
                     story:child.val().story,
-                    createdFlag:child.val().createdFlag
+                    createdFlag:child.val().createdFlag,
+                    id:child.val().id
                 });
             });
 
