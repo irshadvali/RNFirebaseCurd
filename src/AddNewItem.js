@@ -5,18 +5,13 @@ import style from "./ListItemStyle"
 import ListItemStyle from "./ListItemStyle"
 import CheckBox from "./CheckBox"
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import { NavigationActions } from "react-navigation";
 import * as firebase from "firebase";
-// create a component
-
-// const firebaseConfig = {
-//     apiKey: "AIzaSyDAyjiQoy7ogBnqI_Ae3gD5FJn7q3sjNas",
-//     authDomain: "fbpractice-38d8c.firebaseapp.com",
-//     databaseURL: "https://fbpractice-38d8c.firebaseio.com",
-//     projectId: "fbpractice-38d8c",
-//     storageBucket: "fbpractice-38d8c.appspot.com",
-
-// }
-// const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const goTolist = NavigationActions.reset({
+    index: 0,
+    key: null,
+    actions: [NavigationActions.navigate({ routeName: "ShowList" })]
+  });
 class AddNewItem extends Component {
 
     constructor(props) {
@@ -61,7 +56,8 @@ class AddNewItem extends Component {
                 createdFlag:0
             });
             var { navigate } = this.props.navigation;
-            navigate("ShowList", {});
+           // navigate("ShowList", {});
+           this.props.navigation.dispatch(goTolist);
         }
 
     }

@@ -12,7 +12,8 @@ import {
     FlatList
 } from 'react-native';
 import * as firebase from "firebase";
-import ListItem from "./ListItem"
+import ListItem from "./ListItem";
+import { NavigationActions, StackNavigator } from "react-navigation";
 // create a component
 //var Firebase = require('firebase');
 let ds = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 })

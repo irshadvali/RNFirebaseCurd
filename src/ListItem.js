@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import ListItemStyle from "../src/ListItemStyle";
 import CheckBox from './CheckBox'
 import * as firebase from "firebase";
+import { NavigationActions, StackNavigator } from "react-navigation";
 class ListItem extends Component {
   static navigationOptions = {
     header: null
@@ -102,10 +103,17 @@ class ListItem extends Component {
 
 
 
-
+  // showData  = () => {
+  //   //alert("hi")
+  //   const { params } = this.props.navigation.state;
+  //   navigate("DetailsPage", { listObject: this.props.dataResult });
+  // }
 
   render() {
     return (
+      <TouchableHighlight
+      // onPress={()=>this.showData()}
+      >
       <View style={ListItemStyle.container}>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={ListItemStyle.titleText}
@@ -151,6 +159,7 @@ class ListItem extends Component {
         </View>
         <View style={ListItemStyle.divider}></View>
       </View>
+       </TouchableHighlight>
     );
   }
 }
