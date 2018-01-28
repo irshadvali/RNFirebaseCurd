@@ -69,7 +69,8 @@ class ListItem extends Component {
     // this.itemsRef.child(this.props.dataResult.id).remove();
     this.setState({ likechecked: val });
     if (val == true) {
-      this.itemsRef.child(this.props.dataResult.id).update({ "like": 1 })
+      // alert(val)
+      this.itemsRef.child(this.props.dataResult.id).update({ like: 1 })
       // this.setState({
       //     like: 1
       // })

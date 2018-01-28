@@ -101,7 +101,10 @@ class ShowList extends Component {
         if (this.state.itemDataSource) {
             return (
                 <View style={styles.appContainer}>
-                <View style={{height:50,backgroundColor:"#e6e6e6"}}></View>
+                <View style={{height:50,backgroundColor:"#e6e6e6"}}>
+
+                <Text style={{color:"#333",fontWeight:"bold", textAlign:"center",marginTop:22}}>NOTELY</Text>
+                </View>
                     <View style={{
                         flex: 1,
                         flexDirection: 'column',
